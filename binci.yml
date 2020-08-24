@@ -1,0 +1,22 @@
+from: mhart/alpine-node:14
+user: ${UID}
+env:
+  - WEB_PORT=8000
+  - HMR_PORT=8010
+  - WEB_HOSTNAME=${HOST}
+  - PORT=8088
+  - CERTS=certs
+expose:
+  - 8000:8000
+  - 8001:8001
+  - 8010:8010
+  - 8088:8088
+tasks:
+  env: env | sort
+  shell: /bin/sh
+  install: yarn
+  dev: |
+    rm -rf .cache dist logs
+    $(npm bin)/pm2 start pm2-config.json -o ./logs/server.log
+    sleep 3
+    $(npm bin)/parcel ./client/index.html -p $WEB_PORT --hmr-port $HMR_PORT --host 0.0.0.0 --hmr-hostname $WEB_HOSTNAME $ --no-cache

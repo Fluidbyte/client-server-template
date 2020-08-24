@@ -1,0 +1,10 @@
+{
+  "script": "./server/index.js",
+  "watch": true,
+  "ignore_watch": ["./src", "./logs"],
+  "watch_options": {
+    "followSymlinks": false
+  },
+  "out_file": "./logs/service.log",
+  "name": "dev-server"
+}
